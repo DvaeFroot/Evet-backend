@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { CountryModel, ICountry } from "../models/country";
+import { TimerModel, ITimer } from "../models/timer";
 
 const routes = Router();
 
 routes.get("/", async (req, res) => {
   try {
-    const countries: ICountry[] = await CountryModel.find().exec();
+    const countries: ITimer[] = await TimerModel.find().exec();
     return res.json(countries);
   } catch (error) {
     console.error(error);
@@ -15,20 +15,20 @@ routes.get("/", async (req, res) => {
 
 routes.post("/", async (req, res) => {
   try {
-    const country: ICountry = req.body;
+    const timer: ITimer = req.body;
 
-    const countryExists = await CountryModel.findOne({
-      name: country.name,
+    const timerExists = await TimerModel.findOne({
+      name: timer.name,
     }).exec();
 
-    if (countryExists) {
+    if (timerExists) {
       return res
         .status(409)
-        .json({ error: "There is already another country with this name" });
+        .json({ error: "There is already another timer with this name" });
     }
 
-    const newCountry = await CountryModel.create(country);
-    return res.status(201).json(newCountry);
+    const newTimer = await TimerModel.create(timer);
+    return res.status(201).json(newTimer);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Sorry, something went wrong :/" });
