@@ -2,18 +2,28 @@ import { model, Schema, Document } from "mongoose";
 
 interface ITimer extends Document {
   name: string;
-  iso2code: string;
+  channel: string;
+  endTime: string;
 }
 
-const TimerSchema = new Schema({
-  name: {
-    type: String,
-    unique: true,
+const TimerSchema = new Schema(
+  {
+    name: {
+      type: String,
+      unique: true,
+    },
+    channel: {
+      type: String,
+      unique: true,
+    },
+    endTime: {
+      type: Date,
+    },
   },
-  endTime: {
-    type: String,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const TimerModel = model<ITimer>("Timer", TimerSchema);
 
