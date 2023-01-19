@@ -66,6 +66,8 @@ routes.delete("/:channel", async (req, res) => {
         .json({ error: "There is no timer for this channel" });
     }
 
+    await TimerModel.deleteOne({ channel: req.params.channel });
+
     return res.status(200).json(timer);
   } catch (error) {
     console.error(error);
